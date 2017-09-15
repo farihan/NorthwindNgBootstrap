@@ -1,0 +1,75 @@
+﻿<header class="py-4 bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1><i class="fa fa-product-hunt"></i> Product</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section id="actions" class="py-4 mb-2 bg-faded">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-6 ">
+                <div class="input-group">
+                    <input id="filter" type="text" [(ngModel)]="query.filter" name="filter"class="form-control" placeholder="Search products...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" (click)="onFilterChange()">Search</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p>This component demonstrates fetching products from the server.</p>
+
+            <p *ngIf="!queryResult"><em>Loading...</em></p>
+
+            <div class="my-2 span12 pull-right">
+                <a href="#" class="btn btn-outline-secondary btn-sm">Create Product</a>
+            </div>
+
+            <table class='table small'>
+                <thead class="thead-default">
+                    <tr>
+                        <th *ngFor="let column of columns">
+                            <a [routerLink]="['/product']" *ngIf="column.isSortable" (click)="sortBy(column.key)">
+                                {{ column.title }}
+                            </a><i *ngIf="query.sortBy === column.key"
+                                   class="fa"
+                                   [class.fa-sort-asc]="query.isSortAscending"
+                                   [class.fa-sort-desc]="!query.isSortAscending"></i>
+                            <div *ngIf="!column.isSortable">
+                                {{ column.title }}
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let record of queryResult.records">
+                        <td>{{ record.productId }}</td>
+                        <td>{{ record.productName }}</td>
+                        <td>{{ record.quantityPerUnit }}</td>
+                        <td>{{ record.unitPrice }}</td>
+                        <td>{{ record.unitsInStock }}</td>
+                        <td>{{ record.unitsOnOrder }}</td>
+                        <td>{{ record.reorderLevel }}</td>
+                        <td><input type="checkbox" [ngModel]="record.discontinued" onclick="return false;" /></td>
+                        <td style="width:250px">
+                            <a href="#" class="btn btn-outline-secondary btn-sm" role="button">Details</a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm" role="button">Update</a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm" role="button">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <pagination [total-records]="queryResult.totalRecords" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></pagination>
+        </div>
+    </div>
+</div>

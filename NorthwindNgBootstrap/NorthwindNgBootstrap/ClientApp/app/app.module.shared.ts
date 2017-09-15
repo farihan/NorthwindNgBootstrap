@@ -13,6 +13,8 @@ import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { PaginationComponent } from './components/shared/pagination.component';
+import { ProductComponent } from './components/product/product.component';
 
 import { NotificationService } from './services/notification.service';
 import { ProductService } from './services/product.service';
@@ -26,7 +28,9 @@ import { SupplierService } from './services/supplier.service';
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        FooterComponent
+        FooterComponent,
+        PaginationComponent,
+        ProductComponent
     ],
     imports: [
         CommonModule,
@@ -40,6 +44,7 @@ import { SupplierService } from './services/supplier.service';
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
+            { path: 'product', component: ProductComponent },
             { path: '**', redirectTo: 'home' }
         ])
     ],

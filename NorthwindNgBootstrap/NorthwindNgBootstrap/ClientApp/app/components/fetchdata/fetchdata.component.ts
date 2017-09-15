@@ -14,9 +14,7 @@ export class FetchDataComponent {
     constructor(http: Http, @Inject('BASE_URL') baseUrl: string,
         private loadingBarService: SlimLoadingBarService,
         private notificationService: NotificationService) {
-        this.loadingBarService.start(() => {
-            console.log('Loading complete');
-        });
+        this.loadingBarService.start();
 
         http.get(baseUrl + 'api/SampleData/WeatherForecasts').subscribe(result => {
             this.forecasts = result.json() as WeatherForecast[];
