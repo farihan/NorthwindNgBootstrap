@@ -286,5 +286,8 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
-NorthwindNgBootstrap/NorthwindNgBootstrap/appsettings.json
-NorthwindNgBootstrap/NorthwindNgBootstrap/appsettings.Development.json
+
+# ignore appsettings configuration files
+**/appsettings.development.json
+**/appsettings.staging.json
+**/appsettings.production.json
