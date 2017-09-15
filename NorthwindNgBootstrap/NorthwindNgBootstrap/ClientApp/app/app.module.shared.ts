@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ToastyModule } from 'ng2-toasty';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
@@ -32,6 +33,7 @@ import { SupplierService } from './services/supplier.service';
         HttpModule,
         FormsModule,
         ToastyModule.forRoot(), 
+        SlimLoadingBarModule.forRoot(),
         NgbModule.forRoot(), 
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },

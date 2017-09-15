@@ -16,6 +16,8 @@ const treeShakableModules = [
     'zone.js',
     'ng2-toasty',
     'ng2-toasty/bundles/style-bootstrap.css',
+    'ng2-slim-loading-bar',
+    'ng2-slim-loading-bar/bundles/style.css'
 ];
 const nonTreeShakableModules = [
     'bootstrap',

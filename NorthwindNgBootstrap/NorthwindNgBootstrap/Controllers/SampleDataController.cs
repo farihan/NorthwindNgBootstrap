@@ -17,6 +17,7 @@ namespace NorthwindNgBootstrap.Controllers
         [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
+            System.Threading.Thread.Sleep(10000);
             var rng = new Random();
             return Enumerable.Range(1, 100).Select(index => new WeatherForecast
             {
