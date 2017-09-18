@@ -77,55 +77,55 @@
 <ng-template id="modalProductDetails" #modalProductDetails let-c="close" let-d="dismiss" class="small">
     <div class="modal-header">
         <h4 class="modal-title"><i class="fa fa-file"></i> Product Details</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <button type="button" class="close" aria-label="Close" (click)="close()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Product Name</label>
+            <label class="col-sm-4 col-form-label">Product Name</label>
             <div class="col-sm-8">
                 <input type="text" id="productName" name="productName" placeholder="" class="form-control" [(ngModel)]="productDetails.productName" />
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Quantity Per Unit</label>
+            <label class="col-sm-4 col-form-label">Quantity Per Unit</label>
             <div class="col-sm-8 input-group">
                 <input type="text" id="quantityPerUnit" name="quantityPerUnit" placeholder="" class="form-control small" [(ngModel)]="productDetails.quantityPerUnit" />
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Unit Price</label>
+            <label class="col-sm-4 col-form-label">Unit Price</label>
             <div class="col-sm-8 input-group">
                 <input type="text" id="unitPrice" name="unitPrice" placeholder="" class="form-control input-sm" [(ngModel)]="productDetails.unitPrice" />
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Units In Stock</label>
+            <label class="col-sm-4 col-form-label">Units In Stock</label>
             <div class="col-sm-8 input-group">
                 <input type="text" id="unitsInStock" name="unitsInStock" placeholder="" class="form-control input-sm" [(ngModel)]="productDetails.unitsInStock" />
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Units On Order</label>
+            <label class="col-sm-4 col-form-label">Units On Order</label>
             <div class="col-sm-8 input-group">
                 <input type="text" id="unitsOnOrder" name="unitsOnOrder" placeholder="" class="form-control input-sm" [(ngModel)]="productDetails.unitsOnOrder" />
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Reorder Level</label>
+            <label class="col-sm-4 col-form-label">Reorder Level</label>
             <div class="col-sm-8 input-group">
                 <input type="text" id="reorderLevel" name="reorderLevel" placeholder="" class="form-control input-sm" [(ngModel)]="productDetails.reorderLevel" />
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Discontinued</label>
+            <label class="col-sm-4 col-form-label">Discontinued</label>
             <div class="col-sm-8 input-group">
                 <input type="checkbox" onclick="return false;" style="margin-top:15px" [ngModel]="productDetails.discontinued" />
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Supplier</label>
+            <label class="col-sm-4 col-form-label">Supplier</label>
             <div class="col-sm-8 input-group">
                 <select id="supplierId" class="form-control" name="supplierId" [(ngModel)]="productDetails.supplierId">
                     <option value="">Select...</option>
@@ -134,7 +134,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Category</label>
+            <label class="col-sm-4 col-form-label">Category</label>
             <div class="col-sm-8">
                 <select id="categoryId" class="form-control" name="categoryId" [(ngModel)]="productDetails.categoryId">
                     <option value="">Select...</option>
@@ -144,81 +144,89 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-outline-dark" (click)="c('Close click')">Cancel</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" (click)="close()">Cancel</button>
     </div>
 </ng-template>
 
 <ng-template id="modalProductUpdate" #modalProductUpdate let-c="close" let-d="dismiss" class="small">
-    <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-file"></i> Product Details</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Product Name</label>
-            <div class="col-sm-8">
-                <input type="text" id="productName" name="productName" placeholder="" class="form-control" [(ngModel)]="productUpdate.productName" />
+    <form #updateProductForm="ngForm" (ngSubmit)="onUpdate(updateProductForm.value, updateProductForm.valid)" validate>
+        <div class="modal-header">
+            <h4 class="modal-title"><i class="fa fa-file"></i> Product Details</h4>
+            <button type="button" class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group row"  style="display: none;">
+                <label class="col-sm-4 col-form-label">Product ID</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productUpdate.productId" name="productUpdate.productId" placeholder="" class="form-control" [(ngModel)]="productUpdate.productId" />
+                </div>
+            </div>            
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Product Name</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productUpdate.productName" name="productUpdate.productName" placeholder="" class="form-control" [(ngModel)]="productUpdate.productName" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Quantity Per Unit</label>
+                <div class="col-sm-8 input-group">
+                    <input type="text" id="productUpdate.quantityPerUnit" name="productUpdate.quantityPerUnit" placeholder="" class="form-control small" [(ngModel)]="productUpdate.quantityPerUnit" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Unit Price</label>
+                <div class="col-sm-8 input-group">
+                    <input type="text" id="productUpdate.unitPrice" name="productUpdate.unitPrice" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitPrice" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Units In Stock</label>
+                <div class="col-sm-8 input-group">
+                    <input type="text" id="productUpdate.unitsInStock" name="productUpdate.unitsInStock" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitsInStock" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Units On Order</label>
+                <div class="col-sm-8 input-group">
+                    <input type="text" id="productUpdate.unitsOnOrder" name="productUpdate.unitsOnOrder" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitsOnOrder" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Reorder Level</label>
+                <div class="col-sm-8 input-group">
+                    <input type="text" id="productUpdate.reorderLevel" name="productUpdate.reorderLevel" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.reorderLevel" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Discontinued</label>
+                <div class="col-sm-8 input-group">
+                    <input type="checkbox" id="productUpdate.discontinued" name="productUpdate.reorderLevel" onclick="return false;" style="margin-top:15px" [(ngModel)]="productUpdate.discontinued" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Supplier</label>
+                <div class="col-sm-8 input-group">
+                    <select id="productUpdate.supplierId" class="form-control" name="productUpdate.supplierId" [(ngModel)]="productUpdate.supplierId">
+                        <option value="">Select...</option>
+                        <option *ngFor="let supplier of suppliers" value="{{ supplier.supplierID }}">{{ supplier.contactName }}&nbsp;({{ supplier.companyName }})</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Category</label>
+                <div class="col-sm-8">
+                    <select id="productUpdate.categoryId" class="form-control" name="productUpdate.categoryId" [(ngModel)]="productUpdate.categoryId">
+                        <option value="">Select...</option>
+                        <option *ngFor="let category of categories" value="{{ category.categoryID }}">{{ category.categoryName }}</option>
+                    </select>
+                </div>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Quantity Per Unit</label>
-            <div class="col-sm-8 input-group">
-                <input type="text" id="quantityPerUnit" name="quantityPerUnit" placeholder="" class="form-control small" [(ngModel)]="productUpdate.quantityPerUnit" />
-            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-outline-dark" (click)="close()">Cancel</button>
+            <button type="submit" class="btn btn-sm btn-primary" >Update</button>
         </div>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Unit Price</label>
-            <div class="col-sm-8 input-group">
-                <input type="text" id="unitPrice" name="unitPrice" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitPrice" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Units In Stock</label>
-            <div class="col-sm-8 input-group">
-                <input type="text" id="unitsInStock" name="unitsInStock" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitsInStock" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Units On Order</label>
-            <div class="col-sm-8 input-group">
-                <input type="text" id="unitsOnOrder" name="unitsOnOrder" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitsOnOrder" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Reorder Level</label>
-            <div class="col-sm-8 input-group">
-                <input type="text" id="reorderLevel" name="reorderLevel" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.reorderLevel" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Discontinued</label>
-            <div class="col-sm-8 input-group">
-                <input type="checkbox" onclick="return false;" style="margin-top:15px" [ngModel]="productUpdate.discontinued" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Supplier</label>
-            <div class="col-sm-8 input-group">
-                <select id="supplierId" class="form-control" name="supplierId" [(ngModel)]="productUpdate.supplierId">
-                    <option value="">Select...</option>
-                    <option *ngFor="let supplier of suppliers" value="{{ supplier.supplierID }}">{{ supplier.contactName }}&nbsp;({{ supplier.companyName }})</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-4 col-form-label">Category</label>
-            <div class="col-sm-8">
-                <select id="categoryId" class="form-control" name="categoryId" [(ngModel)]="productUpdate.categoryId">
-                    <option value="">Select...</option>
-                    <option *ngFor="let category of categories" value="{{ category.categoryID }}">{{ category.categoryName }}</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-outline-dark" (click)="c('Close click')">Cancel</button>
-        <button type="button" class="btn btn-sm btn-primary" (click)="c('Close click')">Update</button>
-    </div>
+    </form>
 </ng-template>

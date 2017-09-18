@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
 
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { NotificationService } from './../../services/notification.service';
@@ -99,8 +99,35 @@ export class ProductComponent implements OnInit {
         this.populateProducts();
     }
 
+    // crud
+    private closeResult: string;
+    private modalProduct: NgbModalRef;
+
+    private getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
+    }
+    
+    private showModal(content: any) {
+        this.modalProduct = this.modalService.open(content);
+        this.modalProduct.result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+    }
+
+    close() {
+        this.modalProduct.close();
+    }
+
     // details    
-    public productDetails: any;
+    public productDetails: any = {};
 
     openProductDetails(content: any, productId: number) {
         this.loadingBarService.start();
@@ -110,16 +137,16 @@ export class ProductComponent implements OnInit {
                 this.productDetails = result;
                 this.loadingBarService.complete();
                 this.notificationService.info('Product details loaded');
-
-                this.modalService.open(content);
+                this.showModal(content);
             },
             error => {
+                this.loadingBarService.complete();
                 this.notificationService.error(error);
             });
     }
 
     // update
-    public productUpdate: any;
+    public productUpdate: any = {};
 
     openProductUpdate(content: any, productId: number) {
         this.loadingBarService.start();
@@ -129,12 +156,30 @@ export class ProductComponent implements OnInit {
                 this.productUpdate = result;
                 this.loadingBarService.complete();
                 this.notificationService.info('Product update loaded');
-
-                this.modalService.open(content);
+                this.showModal(content);
             },
             error => {
                 this.loadingBarService.complete();
                 this.notificationService.error(error);
             });
+    }
+
+    onUpdate(productUpdate: Product, isValid: boolean) {
+        if (isValid) {
+            this.loadingBarService.start();
+            this.productService.update(this.productUpdate)
+                .subscribe(result => {
+                    this.loadingBarService.complete();
+                    this.notificationService.success('Product updated');
+                    this.populateProducts();
+                    this.modalProduct.close(); // somehow not able to close with close()
+                }, error => {
+                    this.loadingBarService.complete();
+                    this.notificationService.error(error);
+                });
+        }
+        else {
+            this.notificationService.error('Invalid product');
+        }
     }
 }
