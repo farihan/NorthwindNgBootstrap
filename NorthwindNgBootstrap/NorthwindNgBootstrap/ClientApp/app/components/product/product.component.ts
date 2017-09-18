@@ -182,4 +182,81 @@ export class ProductComponent implements OnInit {
             this.notificationService.error('Invalid product');
         }
     }
+
+    // create
+    public productCreate: any = {};
+
+    openProductCreate(content: any, productId: number) {
+        this.loadingBarService.start();
+
+        this.productService.getProduct(productId)
+            .subscribe(result => {
+                this.productCreate = result;
+                this.loadingBarService.complete();
+                this.notificationService.info('Product create loaded');
+                this.showModal(content);
+            },
+            error => {
+                this.loadingBarService.complete();
+                this.notificationService.error(error);
+            });
+    }
+
+    onCreate(productCreate: Product, isValid: boolean) {
+        if (isValid) {
+            this.loadingBarService.start();
+            this.productService.create(this.productCreate)
+                .subscribe(result => {
+                    this.loadingBarService.complete();
+                    this.notificationService.success('Product created');
+                    this.populateProducts();
+                    this.modalProduct.close(); // somehow not able to close with close()
+                }, error => {
+                    this.loadingBarService.complete();
+                    this.notificationService.error(error);
+                });
+        }
+        else {
+            this.notificationService.error('Invalid product');
+        }
+    }
+
+    // delete
+    public productDelete: any = {};
+
+    openProductDelete(content: any, productId: number) {
+        this.loadingBarService.start();
+
+        this.productService.getProduct(productId)
+            .subscribe(result => {
+                this.productDelete = result;
+                this.loadingBarService.complete();
+                this.notificationService.info('Product delete loaded');
+                this.showModal(content);
+            },
+            error => {
+                this.loadingBarService.complete();
+                this.notificationService.error(error);
+            });
+    }
+
+    onDelete(productDelete: Product, isValid: boolean) {
+        if (isValid) {
+            this.loadingBarService.start();
+            this.productService.delete(this.productDelete)
+                .subscribe(result => {
+                    this.loadingBarService.complete();
+                    this.notificationService.success('Product deleted');
+                    this.populateProducts();
+                    this.modalProduct.close(); // somehow not able to close with close()
+                }, error => {
+                    this.loadingBarService.complete();
+                    this.notificationService.error(error);
+                });
+        }
+        else {
+            this.notificationService.error('Invalid product');
+        }
+    }
+
 }
