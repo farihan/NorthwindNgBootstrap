@@ -31,7 +31,7 @@
             <p *ngIf="!queryResult"><em>Loading...</em></p>
 
             <div class="my-2 span12 pull-right">
-                <a href="#" class="btn btn-outline-secondary btn-sm">Create Product</a>
+                <button class="btn btn-outline-secondary btn-sm" role="button" (click)="openProductCreate(modalProductCreate)">Create Product</button>
             </div>
 
             <table class='table'>
@@ -63,7 +63,7 @@
                         <td style="width:250px">
                             <button class="btn btn-outline-secondary btn-sm" role="button" (click)="openProductDetails(modalProductDetails, record.productId)">Details</button>
                             <button class="btn btn-outline-secondary btn-sm" role="button" (click)="openProductUpdate(modalProductUpdate, record.productId)">Update</button>
-                            <a href="#" class="btn btn-outline-secondary btn-sm" role="button">Delete</a>
+                            <button class="btn btn-outline-secondary btn-sm" role="button" (click)="openProductDelete(modalProductDelete, record.productId)">Delete</button>
                         </td>
                     </tr>
                 </tbody>
@@ -149,7 +149,7 @@
 </ng-template>
 
 <ng-template id="modalProductUpdate" #modalProductUpdate let-c="close" let-d="dismiss" class="small">
-    <form #updateProductForm="ngForm" (ngSubmit)="onUpdate(updateProductForm.value, updateProductForm.valid)" validate>
+    <form #updateProductForm="ngForm" (ngSubmit)="onUpdate(updateProductForm.value, updateProductForm.valid)" novalidate>
         <div class="modal-header">
             <h4 class="modal-title"><i class="fa fa-file"></i> Product Details</h4>
             <button type="button" class="close" aria-label="Close" (click)="close()">
@@ -157,58 +157,288 @@
             </button>
         </div>
         <div class="modal-body">
-            <div class="form-group row"  style="display: none;">
+            <div class="form-group row" style="display: none;">
                 <label class="col-sm-4 col-form-label">Product ID</label>
                 <div class="col-sm-8">
                     <input type="text" id="productUpdate.productId" name="productUpdate.productId" placeholder="" class="form-control" [(ngModel)]="productUpdate.productId" />
                 </div>
-            </div>            
+            </div>
+            <div class="form-group row has-error" [ngClass]="{ 'has-error': !productUpdate_productName.valid && (productUpdate_productName.dirty || updateProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Product Name</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productUpdate.productName" name="productUpdate.productName" placeholder="" class="form-control" [(ngModel)]="productUpdate.productName" #productUpdate_productName="ngModel" required />
+                    <div *ngIf="!productUpdate_productName.valid && (productUpdate_productName.dirty || updateProductForm.submitted)"
+                         class="alert alert-danger">
+                        Product Name is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productUpdate_quantityPerUnit.valid && (productUpdate_quantityPerUnit.dirty || updateProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Quantity Per Unit</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productUpdate.quantityPerUnit" name="productUpdate.quantityPerUnit" placeholder="" class="form-control small" [(ngModel)]="productUpdate.quantityPerUnit" #productUpdate_quantityPerUnit="ngModel" required />
+                    <div *ngIf="!productUpdate_quantityPerUnit.valid && (productUpdate_quantityPerUnit.dirty || updateProductForm.submitted)"
+                         class="alert alert-danger">
+                        Quantity Per Unit is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productUpdate_unitPrice.valid && (productUpdate_unitPrice.dirty || updateProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Unit Price</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productUpdate.unitPrice" name="productUpdate.unitPrice" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitPrice" #productUpdate_unitPrice="ngModel" required />
+                    <div *ngIf="!productUpdate_unitPrice.valid && (productUpdate_unitPrice.dirty || updateProductForm.submitted)"
+                         class="alert alert-danger">
+                        Unit Price is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productUpdate_unitsInStock.valid && (productUpdate_unitsInStock.dirty || updateProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Units In Stock</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productUpdate.unitsInStock" name="productUpdate.unitsInStock" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitsInStock" #productUpdate_unitsInStock="ngModel" required />
+                    <div *ngIf="!productUpdate_unitsInStock.valid && (productUpdate_unitsInStock.dirty || updateProductForm.submitted)"
+                         class="alert alert-danger">
+                        Units In Stock is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productUpdate_unitsOnOrder.valid && (productUpdate_unitsOnOrder.dirty || updateProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Units On Order</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productUpdate.unitsOnOrder" name="productUpdate.unitsOnOrder" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitsOnOrder" #productUpdate_unitsOnOrder="ngModel" required />
+                    <div *ngIf="!productUpdate_unitsOnOrder.valid && (productUpdate_unitsOnOrder.dirty || updateProductForm.submitted)"
+                         class="alert alert-danger">
+                        Units On Order is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productUpdate_reorderLevel.valid && (productUpdate_reorderLevel.dirty || updateProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Reorder Level</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productUpdate.reorderLevel" name="productUpdate.reorderLevel" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.reorderLevel" #productUpdate_reorderLevel="ngModel" required />
+                    <div *ngIf="!productUpdate_reorderLevel.valid && (productUpdate_reorderLevel.dirty || updateProductForm.submitted)"
+                         class="alert alert-danger">
+                        Reorder Level is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Discontinued</label>
+                <div class="col-sm-8">
+                    <input type="checkbox" id="productUpdate.discontinued" name="productUpdate.discontinued" style="margin-top:15px" [(ngModel)]="productUpdate.discontinued" />
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productUpdate_supplierId.valid && (productUpdate_supplierId.dirty || updateProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Supplier</label>
+                <div class="col-sm-8">
+                    <select id="productUpdate.supplierId" class="form-control" name="productUpdate.supplierId" [(ngModel)]="productUpdate.supplierId" #productUpdate_supplierId="ngModel" required>
+                        <option value="">Select...</option>
+                        <option *ngFor="let supplier of suppliers" value="{{ supplier.supplierID }}">{{ supplier.contactName }}&nbsp;({{ supplier.companyName }})</option>
+                    </select>
+                    <div *ngIf="!productUpdate_supplierId.valid && (productUpdate_supplierId.dirty || updateProductForm.submitted)"
+                         class="alert alert-danger">
+                        Supplier is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productUpdate_categoryId.valid && (productUpdate_categoryId.dirty || updateProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Category</label>
+                <div class="col-sm-8">
+                    <select id="productUpdate.categoryId" class="form-control" name="productUpdate.categoryId" [(ngModel)]="productUpdate.categoryId" #productUpdate_categoryId="ngModel" required>
+                        <option value="">Select...</option>
+                        <option *ngFor="let category of categories" value="{{ category.categoryID }}">{{ category.categoryName }}</option>
+                    </select>
+                    <div *ngIf="!productUpdate_categoryId.valid && (productUpdate_categoryId.dirty || updateProductForm.submitted)"
+                         class="alert alert-danger">
+                        Category is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-outline-dark" (click)="close()">Cancel</button>
+            <button type="submit" class="btn btn-sm btn-primary" >Update</button>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template id="modalProductCreate" #modalProductCreate let-c="close" let-d="dismiss" class="small">
+    <form #createProductForm="ngForm" (ngSubmit)="onCreate(createProductForm.value, createProductForm.valid)" novalidate>
+        <div class="modal-header">
+            <h4 class="modal-title"><i class="fa fa-file"></i> Product Create</h4>
+            <button type="button" class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group row" style="display: none;">
+                <label class="col-sm-4 col-form-label">Product ID</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productCreate.productId" name="productCreate.productId" placeholder="" class="form-control" [(ngModel)]="productCreate.productId" />
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productCreate_productName.valid && (productCreate_productName.dirty || createProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Product Name</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productCreate.productName" name="productCreate.productName" placeholder="" class="form-control" [(ngModel)]="productCreate.productName" #productCreate_productName="ngModel" required />
+                    <div *ngIf="!productCreate_productName.valid && (productCreate_productName.dirty || createProductForm.submitted)"
+                         class="alert alert-danger">
+                        Product Name is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productCreate_quantityPerUnit.valid && (productCreate_quantityPerUnit.dirty || createProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Quantity Per Unit</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productCreate.quantityPerUnit" name="productCreate.quantityPerUnit" placeholder="" class="form-control small" [(ngModel)]="productCreate.quantityPerUnit" #productCreate_quantityPerUnit="ngModel" required />
+                    <div *ngIf="!productCreate_quantityPerUnit.valid && (productCreate_quantityPerUnit.dirty || createProductForm.submitted)"
+                         class="alert alert-danger">
+                        Quantity Per Unit is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productCreate_unitPrice.valid && (productCreate_unitPrice.dirty || createProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Unit Price</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productCreate.unitPrice" name="productCreate.unitPrice" placeholder="" class="form-control input-sm" [(ngModel)]="productCreate.unitPrice" #productCreate_unitPrice="ngModel" required />
+                    <div *ngIf="!productCreate_unitPrice.valid && (productCreate_unitPrice.dirty || createProductForm.submitted)"
+                         class="alert alert-danger">
+                        Unit Price is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productCreate_unitsInStock.valid && (productCreate_unitsInStock.dirty || createProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Units In Stock</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productCreate.unitsInStock" name="productCreate.unitsInStock" placeholder="" class="form-control input-sm" [(ngModel)]="productCreate.unitsInStock" #productCreate_unitsInStock="ngModel" required />
+                    <div *ngIf="!productCreate_unitsInStock.valid && (productCreate_unitsInStock.dirty || createProductForm.submitted)"
+                         class="alert alert-danger">
+                        Units In Stock is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productCreate_unitsOnOrder.valid && (productCreate_unitsOnOrder.dirty || createProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Units On Order</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productCreate.unitsOnOrder" name="productCreate.unitsOnOrder" placeholder="" class="form-control input-sm" [(ngModel)]="productCreate.unitsOnOrder" #productCreate_unitsOnOrder="ngModel" required />
+                    <div *ngIf="!productCreate_unitsOnOrder.valid && (productCreate_unitsOnOrder.dirty || createProductForm.submitted)"
+                         class="alert alert-danger">
+                        Units On Order is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productCreate_reorderLevel.valid && (productCreate_reorderLevel.dirty || createProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Reorder Level</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productCreate.reorderLevel" name="productCreate.reorderLevel" placeholder="" class="form-control input-sm" [(ngModel)]="productCreate.reorderLevel" #productCreate_reorderLevel="ngModel" required  />
+                    <div *ngIf="!productCreate_reorderLevel.valid && (productCreate_reorderLevel.dirty || createProductForm.submitted)"
+                         class="alert alert-danger">
+                        Reorder Level is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Discontinued</label>
+                <div class="col-sm-8">
+                    <input type="checkbox" id="productCreate.discontinued" name="productCreate.discontinued" style="margin-top:15px" [(ngModel)]="productCreate.discontinued" />
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productCreate_supplierId.valid && (productCreate_supplierId.dirty || createProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Supplier</label>
+                <div class="col-sm-8">
+                    <select id="productCreate.supplierId" class="form-control" name="productCreate.supplierId" [(ngModel)]="productCreate.supplierId" #productCreate_supplierId="ngModel" required>
+                        <option value="">Select...</option>
+                        <option *ngFor="let supplier of suppliers" value="{{ supplier.supplierID }}">{{ supplier.contactName }}&nbsp;({{ supplier.companyName }})</option>
+                    </select>
+                    <div *ngIf="!productCreate_supplierId.valid && (productCreate_supplierId.dirty || createProductForm.submitted)"
+                         class="alert alert-danger">
+                        Supplier is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{ 'has-error': !productCreate_categoryId.valid && (productCreate_categoryId.dirty || createProductForm.submitted)}">
+                <label class="col-sm-4 col-form-label">Category</label>
+                <div class="col-sm-8">
+                    <select id="productCreate.categoryId" class="form-control" name="productCreate.categoryId" [(ngModel)]="productCreate.categoryId" #productCreate_categoryId="ngModel" required >
+                        <option value="">Select...</option>
+                        <option *ngFor="let category of categories" value="{{ category.categoryID }}">{{ category.categoryName }}</option>
+                    </select>
+                    <div *ngIf="!productCreate_categoryId.valid && (productCreate_categoryId.dirty || createProductForm.submitted)"
+                         class="alert alert-danger">
+                        Category is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-outline-dark" (click)="close()">Cancel</button>
+            <button type="submit" class="btn btn-sm btn-primary">Create</button>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template id="modalProductDelete" #modalProductDelete let-c="close" let-d="dismiss" class="small">
+    <form #deleteProductForm="ngForm" (ngSubmit)="onDelete(deleteProductForm.value, deleteProductForm.valid)" novalidate>
+        <div class="modal-header">
+            <h4 class="modal-title"><i class="fa fa-file"></i> Product Details</h4>
+            <button type="button" class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group row" style="display: none;">
+                <label class="col-sm-4 col-form-label">Product ID</label>
+                <div class="col-sm-8">
+                    <input type="text" id="productDelete.productId" name="productDelete.productId" placeholder="" class="form-control" [(ngModel)]="productDelete.productId" />
+                </div>
+            </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Product Name</label>
                 <div class="col-sm-8">
-                    <input type="text" id="productUpdate.productName" name="productUpdate.productName" placeholder="" class="form-control" [(ngModel)]="productUpdate.productName" />
+                    <input type="text" id="productDelete.productName" name="productDelete.productName" placeholder="" class="form-control" [(ngModel)]="productDelete.productName" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Quantity Per Unit</label>
                 <div class="col-sm-8 input-group">
-                    <input type="text" id="productUpdate.quantityPerUnit" name="productUpdate.quantityPerUnit" placeholder="" class="form-control small" [(ngModel)]="productUpdate.quantityPerUnit" />
+                    <input type="text" id="productDelete.quantityPerUnit" name="productDelete.quantityPerUnit" placeholder="" class="form-control small" [(ngModel)]="productDelete.quantityPerUnit" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Unit Price</label>
                 <div class="col-sm-8 input-group">
-                    <input type="text" id="productUpdate.unitPrice" name="productUpdate.unitPrice" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitPrice" />
+                    <input type="text" id="productDelete.unitPrice" name="productDelete.unitPrice" placeholder="" class="form-control input-sm" [(ngModel)]="productDelete.unitPrice" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Units In Stock</label>
                 <div class="col-sm-8 input-group">
-                    <input type="text" id="productUpdate.unitsInStock" name="productUpdate.unitsInStock" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitsInStock" />
+                    <input type="text" id="productDelete.unitsInStock" name="productDelete.unitsInStock" placeholder="" class="form-control input-sm" [(ngModel)]="productDelete.unitsInStock" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Units On Order</label>
                 <div class="col-sm-8 input-group">
-                    <input type="text" id="productUpdate.unitsOnOrder" name="productUpdate.unitsOnOrder" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.unitsOnOrder" />
+                    <input type="text" id="productDelete.unitsOnOrder" name="productDelete.unitsOnOrder" placeholder="" class="form-control input-sm" [(ngModel)]="productDelete.unitsOnOrder" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Reorder Level</label>
                 <div class="col-sm-8 input-group">
-                    <input type="text" id="productUpdate.reorderLevel" name="productUpdate.reorderLevel" placeholder="" class="form-control input-sm" [(ngModel)]="productUpdate.reorderLevel" />
+                    <input type="text" id="productDelete.reorderLevel" name="productDelete.reorderLevel" placeholder="" class="form-control input-sm" [(ngModel)]="productDelete.reorderLevel" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Discontinued</label>
                 <div class="col-sm-8 input-group">
-                    <input type="checkbox" id="productUpdate.discontinued" name="productUpdate.reorderLevel" onclick="return false;" style="margin-top:15px" [(ngModel)]="productUpdate.discontinued" />
+                    <input type="checkbox" id="productDelete.discontinued" name="productDelete.reorderLevel" onclick="return false;" style="margin-top:15px" [(ngModel)]="productDelete.discontinued" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Supplier</label>
                 <div class="col-sm-8 input-group">
-                    <select id="productUpdate.supplierId" class="form-control" name="productUpdate.supplierId" [(ngModel)]="productUpdate.supplierId">
+                    <select id="productDelete.supplierId" class="form-control" name="productDelete.supplierId" [(ngModel)]="productDelete.supplierId">
                         <option value="">Select...</option>
                         <option *ngFor="let supplier of suppliers" value="{{ supplier.supplierID }}">{{ supplier.contactName }}&nbsp;({{ supplier.companyName }})</option>
                     </select>
@@ -217,7 +447,7 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Category</label>
                 <div class="col-sm-8">
-                    <select id="productUpdate.categoryId" class="form-control" name="productUpdate.categoryId" [(ngModel)]="productUpdate.categoryId">
+                    <select id="productDelete.categoryId" class="form-control" name="productDelete.categoryId" [(ngModel)]="productDelete.categoryId">
                         <option value="">Select...</option>
                         <option *ngFor="let category of categories" value="{{ category.categoryID }}">{{ category.categoryName }}</option>
                     </select>
@@ -226,7 +456,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-sm btn-outline-dark" (click)="close()">Cancel</button>
-            <button type="submit" class="btn btn-sm btn-primary" >Update</button>
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
         </div>
     </form>
 </ng-template>

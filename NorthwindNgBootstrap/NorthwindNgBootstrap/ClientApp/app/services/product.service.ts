@@ -21,13 +21,11 @@ export class ProductService {
 
     create(product: Product)
     {
-        return this.http.post(this.endpoint, product)
-            .map(res => res.json());
+        return this.http.post(this.endpoint, product).map(res => res.json());
     }
 
     update(product: Product) {
-        return this.http.put(this.endpoint + '/' + product.productId, product)
-            .map(res => res.json());
+        return this.http.put(this.endpoint + '/' + product.productId, product).map(res => res.json());
     }
 
     delete(product: Product) {

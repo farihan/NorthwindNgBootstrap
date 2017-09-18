@@ -184,22 +184,10 @@ export class ProductComponent implements OnInit {
     }
 
     // create
-    public productCreate: any = {};
+    public productCreate: any = { discontinued: false, supplierId: '', categoryId: '' };
 
-    openProductCreate(content: any, productId: number) {
-        this.loadingBarService.start();
-
-        this.productService.getProduct(productId)
-            .subscribe(result => {
-                this.productCreate = result;
-                this.loadingBarService.complete();
-                this.notificationService.info('Product create loaded');
-                this.showModal(content);
-            },
-            error => {
-                this.loadingBarService.complete();
-                this.notificationService.error(error);
-            });
+    openProductCreate(content: any) {
+        this.showModal(content);
     }
 
     onCreate(productCreate: Product, isValid: boolean) {
@@ -210,7 +198,10 @@ export class ProductComponent implements OnInit {
                     this.loadingBarService.complete();
                     this.notificationService.success('Product created');
                     this.populateProducts();
-                    this.modalProduct.close(); // somehow not able to close with close()
+                    // somehow not able to close with close()
+                    this.modalProduct.close(); 
+                    // clear textboxes
+                    this.productCreate = { discontinued: false, supplierId: '', categoryId: '' };
                 }, error => {
                     this.loadingBarService.complete();
                     this.notificationService.error(error);

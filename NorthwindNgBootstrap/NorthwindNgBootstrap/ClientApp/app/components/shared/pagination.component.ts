@@ -35,7 +35,6 @@ export class PaginationComponent implements OnChanges {
 	currentPage = 1; 
 
 	ngOnChanges(){
-        this.currentPage = 1;
         
         var pagesCount = Math.ceil(this.totalRecords / this.pageSize); 
 		    this.pages = [];
