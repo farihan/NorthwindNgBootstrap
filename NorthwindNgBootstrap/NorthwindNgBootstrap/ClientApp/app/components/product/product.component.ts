@@ -50,8 +50,6 @@ export class ProductComponent implements OnInit {
         private modalService: NgbModal) { }
 
     ngOnInit() {
-        this.populateProducts();
-
         var sources = [
             this.supplierService.getSuppliers(),
             this.categoryService.getCategories(),

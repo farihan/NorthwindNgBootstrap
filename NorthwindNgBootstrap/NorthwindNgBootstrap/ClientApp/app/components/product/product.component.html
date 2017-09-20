@@ -2,16 +2,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1><i class="fa fa-product-hunt"></i> Product</h1>
+                <h1><i class="fa fa-list"></i> Product</h1>
             </div>
         </div>
     </div>
 </header>
 
-<section id="actions" class="py-4 mb-2 bg-faded">
+<section id="actions" class="mb-4 bg-faded">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-6 ">
+            <div class="col-md-6 offset-md-6" >
                 <div class="input-group">
                     <input id="filter" type="text" [(ngModel)]="query.filter" name="filter" class="form-control" placeholder="Search product goods...">
                     <span class="input-group-btn">
@@ -24,16 +24,14 @@
 </section>
 
 <div class="container">
+
     <div class="row">
         <div class="col">
             <p>This component demonstrates fetching products from the server.</p>
 
-            <p *ngIf="!queryResult"><em>Loading...</em></p>
-
             <div class="pull-right mb-4">
                 <button class="btn btn-outline-secondary btn-sm" role="button" (click)="openProductCreate(modalProductCreate)">Create Product</button>
             </div>
-
             <table class='table'>
                 <thead class="thead-default">
                     <tr>
@@ -76,7 +74,7 @@
 
 <ng-template id="modalProductDetails" #modalProductDetails let-c="close" let-d="dismiss" class="small">
     <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-file"></i> Product Details</h4>
+        <h4 class="modal-title"><i class="fa fa-info"></i> Product Details</h4>
         <button type="button" class="close" aria-label="Close" (click)="close()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -151,7 +149,7 @@
 <ng-template id="modalProductUpdate" #modalProductUpdate let-c="close" let-d="dismiss" class="small">
     <form #updateProductForm="ngForm" (ngSubmit)="onUpdate(updateProductForm.value, updateProductForm.valid)" novalidate>
         <div class="modal-header">
-            <h4 class="modal-title"><i class="fa fa-file"></i> Product Details</h4>
+            <h4 class="modal-title"><i class="fa fa-pencil"></i> Product Update</h4>
             <button type="button" class="close" aria-label="Close" (click)="close()">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -266,7 +264,7 @@
 <ng-template id="modalProductCreate" #modalProductCreate let-c="close" let-d="dismiss" class="small">
     <form #createProductForm="ngForm" (ngSubmit)="onCreate(createProductForm.value, createProductForm.valid)" novalidate>
         <div class="modal-header">
-            <h4 class="modal-title"><i class="fa fa-file"></i> Product Create</h4>
+            <h4 class="modal-title"><i class="fa fa-plus"></i> Product Create</h4>
             <button type="button" class="close" aria-label="Close" (click)="close()">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -381,7 +379,7 @@
 <ng-template id="modalProductDelete" #modalProductDelete let-c="close" let-d="dismiss" class="small">
     <form #deleteProductForm="ngForm" (ngSubmit)="onDelete(deleteProductForm.value, deleteProductForm.valid)" novalidate>
         <div class="modal-header">
-            <h4 class="modal-title"><i class="fa fa-file"></i> Product Details</h4>
+            <h4 class="modal-title text-danger"><i class="fa fa-trash"></i> Delete Product?</h4>
             <button type="button" class="close" aria-label="Close" (click)="close()">
                 <span aria-hidden="true">&times;</span>
             </button>
