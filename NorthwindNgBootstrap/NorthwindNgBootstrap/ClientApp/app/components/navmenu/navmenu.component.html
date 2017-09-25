@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class='navbar-brand' [routerLink]="['/home']">Northwind Ng-Bootstrap</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <a class='navbar-brand' [routerLink]="['/']" (click)="navbarCollapsed = true">Northwind Ng-Bootstrap</a>
+    <button class="navbar-toggler" type="button" (click)="navbarCollapsed = !navbarCollapsed" data-toggle="collapse" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarContent">
         <ul class="navbar-nav mr-auto">
             <li [routerLinkActive]="['active']">
                 <a [routerLink]="['/home']" class="nav-link"><i class="fa fa-home"></i> Home</a>
@@ -17,7 +17,7 @@
             <li class="nav-item ">
                 <div ngbDropdown class="d-inline-block">
                     <button class="btn btn-dark dropdown dropdown-toggle" data-toggle="dropdown" id="dropdownNavMenu" ngbDropdownToggle style="color: rgba(255, 255, 255, 0.5)">Dropdown</button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <div ngbDropdownMenu aria-labelledby="dropdownNavMenu">
                         <a [routerLink]="['/home']" class="dropdown-item"><i class="fa fa-home"></i> Home</a>
                         <a [routerLink]="['/counter']" class="dropdown-item"><i class="fa fa-calculator"></i> Counter</a>
                         <a [routerLink]="['/fetch-data']" class="dropdown-item"><i class="fa fa-thermometer"></i> Fetch Data</a>

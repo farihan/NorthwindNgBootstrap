@@ -20,12 +20,13 @@ namespace NorthwindNgBootstrap
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .ConfigureLogging((hostingContext, logging) =>
-                {
-                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging:IncludeScopes"));
-                    //logging.AddConsole();
-                    logging.AddDebug();
-                })
+                // no longer required... already being setup
+                //.ConfigureLogging((hostingContext, logging) =>
+                //{
+                //    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging:IncludeScopes"));
+                //    ogging.AddConsole();
+                //    logging.AddDebug();
+                //})
                 .Build();
     }
 }
